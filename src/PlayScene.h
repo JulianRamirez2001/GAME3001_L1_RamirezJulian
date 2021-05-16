@@ -27,14 +27,9 @@ private:
 	
 	glm::vec2 m_mousePosition;
 
-	Plane* m_pPlaneSprite;
 	Player* m_pPlayer;
 	bool m_playerFacingRight;
 
-	// UI Items
-	Button* m_pBackButton;
-	Button* m_pNextButton;
-	Label* m_pInstructionsLabel;
 };
 
 #endif /* defined (__PLAY_SCENE__) */

@@ -10,7 +10,8 @@
 #include "GameObjectType.h"
 
 
-class GameObject {
+class GameObject 
+{
 public:
 	GameObject();
 	virtual ~GameObject();

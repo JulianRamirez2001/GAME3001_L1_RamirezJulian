@@ -115,61 +115,10 @@ void PlayScene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 	
-	// Plane Sprite
-	m_pPlaneSprite = new Plane();
-	addChild(m_pPlaneSprite);
-
 	// Player Sprite
 	m_pPlayer = new Player();
 	addChild(m_pPlayer);
 	m_playerFacingRight = true;
-
-	// Back Button
-	m_pBackButton = new Button("../Assets/textures/backButton.png", "backButton", BACK_BUTTON);
-	m_pBackButton->getTransform()->position = glm::vec2(300.0f, 400.0f);
-	m_pBackButton->addEventListener(CLICK, [&]()-> void
-	{
-		m_pBackButton->setActive(false);
-		TheGame::Instance().changeSceneState(START_SCENE);
-	});
-
-	m_pBackButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pBackButton->setAlpha(128);
-	});
-
-	m_pBackButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pBackButton->setAlpha(255);
-	});
-	addChild(m_pBackButton);
-
-	// Next Button
-	m_pNextButton = new Button("../Assets/textures/nextButton.png", "nextButton", NEXT_BUTTON);
-	m_pNextButton->getTransform()->position = glm::vec2(500.0f, 400.0f);
-	m_pNextButton->addEventListener(CLICK, [&]()-> void
-	{
-		m_pNextButton->setActive(false);
-		TheGame::Instance().changeSceneState(END_SCENE);
-	});
-
-	m_pNextButton->addEventListener(MOUSE_OVER, [&]()->void
-	{
-		m_pNextButton->setAlpha(128);
-	});
-
-	m_pNextButton->addEventListener(MOUSE_OUT, [&]()->void
-	{
-		m_pNextButton->setAlpha(255);
-	});
-
-	addChild(m_pNextButton);
-
-	/* Instructions Label */
-	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
-	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 500.0f);
-
-	addChild(m_pInstructionsLabel);
 
 	ImGuiWindowFrame::Instance().setGUIFunction(std::bind(&PlayScene::GUI_Function, this));
 }
@@ -182,21 +131,16 @@ void PlayScene::GUI_Function() const
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 	
-	ImGui::Begin("Your Window Title Goes Here", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
+	ImGui::Begin("Lab 1", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
-	if(ImGui::Button("My Button"))
+
+	static float position[2] = { 400.0f, 300.0f };
+	if(ImGui::SliderFloat2("Position", position, 0.0f, 800.0f))
 	{
-		std::cout << "My Button Pressed" << std::endl;
-	}
+		m_pPlayer->getTransform()->position = glm::vec2(position[0], position[1]);
 
-	ImGui::Separator();
-
-	static float float3[3] = { 0.0f, 1.0f, 1.5f };
-	if(ImGui::SliderFloat3("My Slider", float3, 0.0f, 2.0f))
-	{
-		std::cout << float3[0] << std::endl;
-		std::cout << float3[1] << std::endl;
-		std::cout << float3[2] << std::endl;
+		std::cout << position[0] << std::endl;
+		std::cout << position[1] << std::endl;
 		std::cout << "---------------------------\n";
 	}
 	
